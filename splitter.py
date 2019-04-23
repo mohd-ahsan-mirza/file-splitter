@@ -37,11 +37,11 @@ class Splitter:
         starting_index = 0
         file_length = self.row_limit
         files_data.append(self._data[starting_index:file_length])
-
         while (file_length+self.row_limit) < len(self._data):
             starting_index = file_length
             file_length =  file_length + self.row_limit
             files_data.append(self._data[starting_index:file_length])
+        starting_index = file_length
         files_data.append(self._data[starting_index:len(self._data)])
         return files_data
     def can_split(self):
@@ -64,6 +64,9 @@ class Splitter:
             return True
         else:
             return False
-        
+    
+#TODO: Test
+#TODO: Work on presering headers
+#TODO: Build tool to combine files also
         
 
