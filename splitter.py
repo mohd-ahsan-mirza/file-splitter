@@ -27,7 +27,7 @@ class Splitter:
     def _generate_folder(self):
         directory = os.path.join(
         os.getcwd(), 
-        datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
+        datetime.now().strftime('%Y-%m-%d_%H-%M-%S'+"--"+str(self.row_limit)))
         os.makedirs(directory)
         return directory
     def _compute(self):
@@ -56,15 +56,18 @@ class Splitter:
         if len(files_data) > 0:
             self._debug_handler("First Array","\n".join(files_data[0]))
             self._debug_handler("Last array","\n".join(files_data[len(files_data)-1]))
-            file_number = 1 
+            file_number = 1
+            lower_range = 1
+            upper_range = 0
             for file_data in files_data:
-                with open(os.path.join(self._folder_name, self.file_name + " - " + str(file_number)) + self.file_extension, 'w') as writer:
+                upper_range = upper_range + len(file_data)
+                with open(os.path.join(self._folder_name, self.file_name + "-" + str(file_number)) + "--" + lower_range + "-" + upper_range + self.file_extension, 'w') as writer:
                     writer.writelines(file_data)
                 file_number = file_number + 1
+                lower_range = upper_range + 1
             return True
         else:
             return False
-    
 #TODO: Test
 #TODO: Work on presering headers
 #TODO: Build tool to combine files also
