@@ -68,8 +68,8 @@ class Splitter:
             return True
         else:
             return False
-#TODO: Test
+
 #TODO: Work on presering headers
-#TODO: Build tool to combine files also
+
         
 
