@@ -61,7 +61,7 @@ class Splitter:
             upper_range = 0
             for file_data in files_data:
                 upper_range = upper_range + len(file_data)
-                with open(os.path.join(self._folder_name, self.file_name + "-" + str(file_number)) + "--" + lower_range + "-" + upper_range + self.file_extension, 'w') as writer:
+                with open(os.path.join(self._folder_name, self.file_name + "-" + str(file_number)) + "--" + str(lower_range) + "-" + str(upper_range) + self.file_extension, 'w') as writer:
                     writer.writelines(file_data)
                 file_number = file_number + 1
                 lower_range = upper_range + 1
