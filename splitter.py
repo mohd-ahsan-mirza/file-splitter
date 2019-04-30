@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from pprint import pprint
 class Splitter:
     def __init__(self,filename,row_limit,preserve_headers=False,debug=False):
         self.file = filename
@@ -21,7 +22,7 @@ class Splitter:
         if(self.debug):
             print(message)
             print("---------------------")
-            print(data)
+            pprint(data)
     def _split_array(self,starting_index,array_length):
         print("\n".join(self._data[starting_index:array_length]))
     def _generate_folder(self):
@@ -46,7 +47,6 @@ class Splitter:
         return files_data
     def can_split(self):
         if int(len(self._data)/self.row_limit) == 0:
-            print("Rows provided in the parameters are greater than rows in the file")
             return False
         return True
     def get_folder_name(self):
@@ -54,6 +54,7 @@ class Splitter:
     def generate(self):
         files_data = self._compute()
         if len(files_data) > 0:
+            header = self._data[0]
             self._debug_handler("First Array","\n".join(files_data[0]))
             self._debug_handler("Last array","\n".join(files_data[len(files_data)-1]))
             file_number = 1
@@ -61,7 +62,9 @@ class Splitter:
             upper_range = 0
             for file_data in files_data:
                 upper_range = upper_range + len(file_data)
-                with open(os.path.join(self._folder_name, self.file_name + "-" + str(file_number)) + "--" + str(lower_range) + "-" + str(upper_range) + self.file_extension, 'w') as writer:
+                if file_number != 1 and self.preserve_headers:
+                    file_data.insert(0,header)
+                with open(os.path.join(self._folder_name, self.file_name + "--" + str(lower_range) + "-" + str(upper_range) + "--" + str(file_number))  + self.file_extension, 'w') as writer:
                     writer.writelines(file_data)
                 file_number = file_number + 1
                 lower_range = upper_range + 1

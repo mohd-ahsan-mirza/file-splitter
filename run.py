@@ -12,8 +12,9 @@ if "-debug" in sys.argv:
     debug = True
 
 splitter = Splitter(sys.argv[1],sys.argv[2],preserve_headers,debug)
-if splitter.generate():
+if  splitter.can_split():
+    splitter.generate()
     print("Files generated under folder "+splitter.get_folder_name())
 else:
-    print("File can't be split")
+    print("Rows provided in the parameters are greater than rows in the file")
 
